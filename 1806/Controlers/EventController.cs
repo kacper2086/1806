@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using YourNamespace.Models;
-using YourNamespace.Data;
+using YourNamespace.Models;  // Załóżmy, że namespace Twojego modelu to YourNamespace.Models
+using YourNamespace.Data;    // Załóżmy, że namespace Twojego DbContextu to YourNamespace.Data
 
 namespace YourNamespace.Controllers
 {
@@ -42,7 +42,7 @@ namespace YourNamespace.Controllers
 
         // POST: api/Event
         [HttpPost]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
+        public async Task<ActionResult<Event>> AddEvent(Event @event)
         {
             _context.Event.Add(@event);
             await _context.SaveChangesAsync();
@@ -52,14 +52,24 @@ namespace YourNamespace.Controllers
 
         // PUT: api/Event/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvent(int id, Event @event)
+        public async Task<IActionResult> UpdateEvent(int id, Event @event)
         {
             if (id != @event.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(@event).State = EntityState.Modified;
+            var existingEvent = await _context.Event.FindAsync(id);
+            if (existingEvent == null)
+            {
+                return NotFound();
+            }
+
+            existingEvent.Title = @event.Title;
+            existingEvent.StartDate = @event.StartDate;
+            existingEvent.EndDate = @event.EndDate;
+            existingEvent.Serwisant = @event.Serwisant;
+            existingEvent.PartName = @event.PartName;  // Uwzględniamy nullowalność PartName
 
             try
             {
@@ -94,6 +104,20 @@ namespace YourNamespace.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // GET: api/Event/title/{title}
+        [HttpGet("title/{title}")]
+        public async Task<IActionResult> GetEventByTitle(string title)
+        {
+            var @event = await _context.Event.FirstOrDefaultAsync(e => e.Title == title);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(@event);
         }
 
         private bool EventExists(int id)
