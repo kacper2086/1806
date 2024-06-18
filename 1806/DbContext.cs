@@ -9,7 +9,7 @@ namespace YourNamespace.Data
 
         public DbSet<Users> Users { get; set; }
         public DbSet<Products> Product { get; set; } // Dodaj DbSet<Product> tutaj
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Orders> Orders { get; set; }
 
         public DbSet<Event> Event { get; set; }
         public DbSet<ItemShop> ItemShop { get; set; }

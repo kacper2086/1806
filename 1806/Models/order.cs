@@ -1,4 +1,4 @@
-﻿public class Order
+﻿public class Orders
 {
     public int id { get; set; }
     public DateTime order_date { get; set; }

@@ -47,14 +47,14 @@ namespace YourNamespace.Controllers
             _context.Event.Add(@event);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetEvent), new { id = @event.id }, @event);
+            return CreatedAtAction(nameof(GetEvent), new { id = @event.Id }, @event);
         }
 
         // PUT: api/Event/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvent(int id, Event @event)
         {
-            if (id != @event.id)
+            if (id != @event.Id)
             {
                 return BadRequest();
             }
@@ -98,7 +98,7 @@ namespace YourNamespace.Controllers
 
         private bool EventExists(int id)
         {
-            return _context.Event.Any(e => e.id == id);
+            return _context.Event.Any(e => e.Id == id);
         }
     }
 }

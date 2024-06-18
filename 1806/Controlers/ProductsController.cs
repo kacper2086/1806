@@ -42,10 +42,14 @@ namespace YourNamespace.Controllers
 
         // POST: api/products
         [HttpPost]
-        public async Task<ActionResult<Products>> PostProduct(Products product)
+        public ActionResult<Products> AddProduct([FromBody] Products product)
         {
+            // Pobranie największego ID i inkrementacja o 1
+            int nextId = _context.Product.Any() ? _context.Product.Max(p => p.id) + 1 : 1;
+            product.id = nextId;
+
             _context.Product.Add(product);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return CreatedAtAction(nameof(GetProduct), new { id = product.id }, product);
         }
@@ -99,6 +103,19 @@ namespace YourNamespace.Controllers
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.id == id);
+        }
+        // GET: api/products/name/{name}
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetProductByName(string name)
+        {
+            var product = await _context.Product.FirstOrDefaultAsync(p => p.name == name);
+
+            if (product == null)
+            {
+                return NotFound(); // Jeśli produkt nie istnieje, zwróć 404
+            }
+
+            return Ok(product); // Jeśli produkt istnieje, zwróć 200 OK z danymi produktu
         }
     }
 }

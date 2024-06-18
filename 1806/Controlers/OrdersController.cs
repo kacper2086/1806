@@ -21,14 +21,14 @@ namespace YourNamespace.Controllers
 
         // GET: api/orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<Orders>>> GetOrders()
         {
             return await _context.Orders.ToListAsync();
         }
 
         // GET: api/orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<Orders>> GetOrder(int id)
         {
             var order = await _context.Orders.FindAsync(id);
 
@@ -42,7 +42,7 @@ namespace YourNamespace.Controllers
 
         // POST: api/orders
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Orders>> PostOrder(Orders order)
         {
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
@@ -52,7 +52,7 @@ namespace YourNamespace.Controllers
 
         // PUT: api/orders/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutOrder(int id, Orders order)
         {
             if (id != order.id)
             {
