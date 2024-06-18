@@ -4,11 +4,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using YourNamespace.Data;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.EntityFrameworkCore;
+using YourNamespace.Services;
+
 
 namespace YourNamespace
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,20 +25,11 @@ namespace YourNamespace
         // Metoda konfiguracji serwisów aplikacji
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IUserService, UserService>();
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-            services.AddAuthorization(options =>
+            services.AddDbContext<YourDbContext>(options =>
             {
-                options.AddPolicy("MagazynierPolicy", policy =>
-                    policy.RequireRole("Magazynier"));
-
-                options.AddPolicy("SerwisPolicy", policy =>
-                    policy.RequireRole("Serwis"));
-
-                options.AddPolicy("KlientPolicy", policy =>
-                    policy.RequireRole("Klient"));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             // Konfiguracja serwisów, np. dodawanie DbContext, autentykacja, Swagger, inne usługi

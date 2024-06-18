@@ -47,14 +47,14 @@ namespace YourNamespace.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
+            return CreatedAtAction(nameof(GetOrder), new { id = order.id }, order);
         }
 
         // PUT: api/orders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
         {
-            if (id != order.Id)
+            if (id != order.id)
             {
                 return BadRequest();
             }
@@ -98,7 +98,7 @@ namespace YourNamespace.Controllers
 
         private bool OrderExists(int id)
         {
-            return _context.Orders.Any(e => e.Id == id);
+            return _context.Orders.Any(e => e.id == id);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿public class Event
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
+    public int id { get; set; }
+    public string title { get; set; }
+    public DateTime start_date { get; set; }
+    public DateTime end_date { get; set; }
     // Dodaj inne właściwości, jeśli są potrzebne
 }

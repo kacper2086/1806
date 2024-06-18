@@ -10,27 +10,27 @@ namespace YourNamespace.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase
+    public class EventController : ControllerBase
     {
         private readonly YourDbContext _context;
 
-        public EventsController(YourDbContext context)
+        public EventController(YourDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/events
+        // GET: api/Event
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        public async Task<ActionResult<IEnumerable<Event>>> GetEvent()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Event.ToListAsync();
         }
 
-        // GET: api/events/5
+        // GET: api/Event/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _context.Event.FindAsync(id);
 
             if (@event == null)
             {
@@ -40,21 +40,21 @@ namespace YourNamespace.Controllers
             return @event;
         }
 
-        // POST: api/events
+        // POST: api/Event
         [HttpPost]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-            _context.Events.Add(@event);
+            _context.Event.Add(@event);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetEvent), new { id = @event.Id }, @event);
+            return CreatedAtAction(nameof(GetEvent), new { id = @event.id }, @event);
         }
 
-        // PUT: api/events/5
+        // PUT: api/Event/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvent(int id, Event @event)
         {
-            if (id != @event.Id)
+            if (id != @event.id)
             {
                 return BadRequest();
             }
@@ -80,17 +80,17 @@ namespace YourNamespace.Controllers
             return NoContent();
         }
 
-        // DELETE: api/events/5
+        // DELETE: api/Event/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _context.Event.FindAsync(id);
             if (@event == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(@event);
+            _context.Event.Remove(@event);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -98,7 +98,7 @@ namespace YourNamespace.Controllers
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return _context.Event.Any(e => e.id == id);
         }
     }
 }

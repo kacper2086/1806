@@ -1,0 +1,16 @@
+﻿namespace gui
+{
+    public partial class KlientForm : Form
+    {
+        public KlientForm()
+        {
+            InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
+            this.Text = "Klient Form";
+            this.ClientSize = new System.Drawing.Size(800, 450);
+        }
+    }
+}
