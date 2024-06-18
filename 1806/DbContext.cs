@@ -12,6 +12,14 @@ namespace YourNamespace.Data
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<Event> Event { get; set; }
+        public DbSet<ItemShop> ItemShop { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ItemShop>()
+                .Property(i => i.Price)
+                .HasColumnType("numeric(12, 2)");
+        }
 
         public YourDbContext(DbContextOptions<YourDbContext> options) : base(options)
         {

@@ -27,6 +27,7 @@ namespace YourNamespace
         {
             services.AddScoped<IUserService, UserService>();
 
+
             services.AddDbContext<YourDbContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
@@ -39,6 +40,7 @@ namespace YourNamespace
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Your API", Version = "v1" });
             });
         }
+
 
         // Metoda konfiguracji middleware'ów aplikacji
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -54,6 +56,8 @@ namespace YourNamespace
                     c.RoutePrefix = string.Empty; // Swagger UI at the app's root
                 });
             }
+
+
 
             // Inne middleware'y, np. autentykacja, routowanie, obsługa błędów, statyczne pliki, CORS, itp.
             app.UseRouting();

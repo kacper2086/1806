@@ -7,11 +7,13 @@ namespace YourNamespace.Services
     public interface IUserService
     {
         Users Authenticate(string username, string password);
+        
     }
 
     public class UserService : IUserService
     {
         private readonly YourDbContext _context;
+
 
         public UserService(YourDbContext context)
         {
