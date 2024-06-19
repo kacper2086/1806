@@ -13,17 +13,17 @@ COPY . .
 WORKDIR "/src/1806"
 RUN dotnet build "./1806.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Opublikuj aplikacjê
+# Opublikuj aplikacjÄ™
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./1806.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# U¿yj obrazu runtime jako finalnego obrazu
+# UÅ¼yj obrazu runtime jako finalnego obrazu
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Ustaw zmienn¹ œrodowiskow¹, aby aplikacja nas³uchiwa³a na porcie 5157
+# Ustaw zmiennÄ… Å›rodowiskowÄ…, aby aplikacja nasÅ‚uchiwaÅ‚a na porcie 5157
 ENV ASPNETCORE_URLS=http://+:5157
 
 # Zdefiniuj polecenie startowe
