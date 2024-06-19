@@ -238,17 +238,38 @@ namespace gui
             var selectedEvent = (EventDetailsViewModel)eve.SelectedItem;
             var selectedUser = (UserViewModel)ser.SelectedItem;
 
+
             if (selectedEvent != null && selectedUser != null)
             {
+
                 try
                 {
                     using (HttpClient client = new HttpClient())
                     {
-                        // Prepare the username string
-                        string serwisantUsername = selectedUser.Username;
+                        var updateObject = new
+                        {
 
-                        // Send HTTP PUT request to update Serwisant field
-                        HttpResponseMessage response = await client.PutAsync($"{BaseUrl}/api/Event/updateserwisant/{selectedEvent.Id}", new StringContent(JsonConvert.SerializeObject(serwisantUsername), Encoding.UTF8, "application/json"));
+                            Title = selectedEvent.Title,
+                            serwisantUsername = selectedUser.Username,
+                            Status = "in progress"
+                        };
+
+                        // Serializacja do JSON i logowanie
+                        string updateObjectJson = JsonConvert.SerializeObject(updateObject);
+                        Debug.WriteLine("Update Object JSON: " + updateObjectJson);
+                        MessageBox.Show("Update Object JSON: " + updateObjectJson);
+
+                        var content = new StringContent(updateObjectJson, Encoding.UTF8, "application/json");
+
+                        // Logowanie przed wysłaniem żądania
+                        Debug.WriteLine($"Sending PUT request to {BaseUrl}/api/Event/updateserwisant/{selectedEvent.Id}");
+
+                        HttpResponseMessage response = await client.PutAsync($"{BaseUrl}/api/Event/updateserwisant/{selectedEvent.Id}", content);
+
+                        // Logowanie odpowiedzi serwera
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Debug.WriteLine("Response Body: " + responseBody);
+                        MessageBox.Show($"Response Body: {responseBody}");
 
                         if (response.IsSuccessStatusCode)
                         {
@@ -256,16 +277,14 @@ namespace gui
                         }
                         else
                         {
-                            MessageBox.Show($"Wybrany identyfikator wydarzenia: {selectedEvent.Id}");
-
-
-                            MessageBox.Show("Nie udało się zaktualizować serwisanta: " + response.ReasonPhrase);
+                            MessageBox.Show($"Nie udało się zaktualizować serwisanta: {response.ReasonPhrase}. Szczegóły: {responseBody}");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Błąd: " + ex.Message);
+                    Debug.WriteLine("Exception: " + ex.ToString());
                 }
             }
             else
@@ -273,6 +292,8 @@ namespace gui
                 MessageBox.Show("Proszę wybrać zarówno wydarzenie, jak i serwisanta.");
             }
         }
+
+
 
 
 
@@ -298,6 +319,7 @@ namespace gui
         {
 
         }
+
     
     }
 

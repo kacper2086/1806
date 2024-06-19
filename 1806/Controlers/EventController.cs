@@ -249,6 +249,7 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
     var events = await _context.Event
         .Select(e => new EventDetailsViewModel
         {
+            Id = e.Id,
             Title = e.Title,
             Status = e.Status,
             StartDate = e.StartDate,
@@ -289,6 +290,58 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
                 }
             }
         }
+        // PUT: api/Event/{id}
+        [HttpPut("/api/Event/up/{id}")]
+        public async Task<IActionResult> UpdateEventS(int id, Event @event)
+        {
+            if (@event == null)
+            {
+                return BadRequest("Event object is null");
+            }
+
+            if (id != @event.Id)
+            {
+                return BadRequest("Event ID mismatch");
+            }
+
+            var existingEvent = await _context.Event.FindAsync(id);
+            if (existingEvent == null)
+            {
+                return NotFound("Event not found");
+            }
+
+            existingEvent.Title = @event.Title;
+            existingEvent.Serwisant = @event.Serwisant;
+            existingEvent.Status = @event.Status;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(id))
+                {
+                    return NotFound("Event not found during save");
+                }
+                else
+                {
+                    return StatusCode(500, "Concurrency error occurred while updating the event");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                // e.g. _logger.LogError(ex, "An error occurred while updating the event");
+
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+            return NoContent();
+        }
+
+
+
 
 
 
