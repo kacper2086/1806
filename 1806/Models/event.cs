@@ -5,5 +5,7 @@
     public DateTime? StartDate { get; set; }  // Zmieniłem nazwę właściwości na 'StartDate' oraz dodałem nullable
     public DateTime? EndDate { get; set; }  // Zmieniłem nazwę właściwości na 'EndDate' oraz dodałem nullable
     public string Serwisant { get; set; }  // Nullable string
-    public string PartName { get; set; }  // Nullable string
+    public string Part { get; set; }  // Nullable string
+    public string Status { get; set; }  // Dodane pole Status
 }
+

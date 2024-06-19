@@ -117,5 +117,79 @@ namespace YourNamespace.Controllers
 
             return Ok(product); // Jeśli produkt istnieje, zwróć 200 OK z danymi produktu
         }
+        [HttpPut("decrease-stock/{productName}")]
+        public async Task<IActionResult> DecreaseStockQuantity(string productName)
+        {
+            var product = await _context.Product.FirstOrDefaultAsync(p => p.name == productName);
+
+            if (product == null)
+            {
+                return NotFound(); // Product not found
+            }
+
+            // Decrease stock quantity by 1 (assuming you reduce by one for each assignment)
+            if (product.stockquantity > 0)
+            {
+                product.stockquantity--; // Decrease stock by 1
+            }
+            else
+            {
+                return BadRequest("Stock quantity cannot be negative.");
+            }
+
+            _context.Entry(product).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(product.id))
+                {
+                    return NotFound(); // Product not found
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent(); // Successful update
+        }
+        // PUT: api/products/increase-stock/{productName}
+        [HttpPut("increase-stock/{productName}")]
+        public async Task<IActionResult> IncreaseStockQuantity(string productName)
+        {
+            var product = await _context.Product.FirstOrDefaultAsync(p => p.name == productName);
+
+            if (product == null)
+            {
+                return NotFound(); // Produkt nie znaleziony
+            }
+
+            product.stockquantity++; // Zwiększenie stockquantity o 1
+
+            _context.Entry(product).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(product.id))
+                {
+                    return NotFound(); // Produkt nie znaleziony
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent(); // Pomyślnie zaktualizowano
+        }
+
     }
 }

@@ -50,45 +50,7 @@ namespace YourNamespace.Controllers
             return CreatedAtAction(nameof(GetEvent), new { id = @event.Id }, @event);
         }
 
-        // PUT: api/Event/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEvent(int id, Event @event)
-        {
-            if (id != @event.Id)
-            {
-                return BadRequest();
-            }
-
-            var existingEvent = await _context.Event.FindAsync(id);
-            if (existingEvent == null)
-            {
-                return NotFound();
-            }
-
-            existingEvent.Title = @event.Title;
-            existingEvent.StartDate = @event.StartDate;
-            existingEvent.EndDate = @event.EndDate;
-            existingEvent.Serwisant = @event.Serwisant;
-            existingEvent.PartName = @event.PartName;  // Uwzględniamy nullowalność PartName
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+        
 
         // DELETE: api/Event/5
         [HttpDelete("{id}")]
@@ -119,10 +81,187 @@ namespace YourNamespace.Controllers
 
             return Ok(@event);
         }
+        // GET: api/Event/ended
+        [HttpGet("ended")]
+        public async Task<ActionResult<IEnumerable<EventViewModel>>> GetEndedEventTitles()
+        {
+            var endedEvents = await _context.Event
+                .Where(e => e.Status == "ended")
+                .Select(e => new EventViewModel
+                {
+                    Title = e.Title,
+                    StartDate = e.StartDate
+                })
+                .ToListAsync();
+
+            return Ok(endedEvents);
+        }
+        // PUT: api/Event/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEvent(int id, Event @event)
+        {
+            if (id != @event.Id)
+            {
+                return BadRequest();
+            }
+
+            var existingEvent = await _context.Event.FindAsync(id);
+            if (existingEvent == null)
+            {
+                return NotFound();
+            }
+
+            existingEvent.Title = @event.Title;
+            existingEvent.StartDate = @event.StartDate;
+            existingEvent.EndDate = @event.EndDate;
+            existingEvent.Serwisant = @event.Serwisant;
+            existingEvent.Part = @event.Part;
+            existingEvent.Status = @event.Status;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+        // GET: api/Event/ended
+        [HttpGet("started")]
+        public async Task<ActionResult<IEnumerable<EventViewModel>>> GetStartedEventTitles()
+        {
+            var startedEvents = await _context.Event
+                .Where(e => e.Status == "started")
+                .Select(e => new EventViewModel
+                {
+                    Title = e.Title,
+                    StartDate = e.StartDate
+                })
+                .ToListAsync();
+
+            return Ok(startedEvents);
+        }
+
+
+        // PUT: api/Event/title/{title}/startDate/{startDate}
+        [HttpPut("title/{title}/startDate/{startDate}")]
+        public async Task<IActionResult> UpdateEventByTitleAndStartDate(string title, DateTime startDate, Event @event)
+        {
+            var existingEvent = await _context.Event.FirstOrDefaultAsync(e => e.Title == title && e.StartDate == startDate);
+
+            if (existingEvent == null)
+            {
+                return NotFound();
+            }
+
+            if (existingEvent.Part != "default_value")
+            {
+                return BadRequest("Part is already assigned to this event.");
+            }
+            else
+            {
+
+            }
+
+            // Ustaw pozostałe wartości
+            existingEvent.Title = @event.Title;
+            existingEvent.StartDate = @event.StartDate;
+            existingEvent.EndDate = @event.EndDate;
+            existingEvent.Serwisant = @event.Serwisant;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(existingEvent.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+        // PUT: api/Event/issue/{eventId}
+        [HttpPut("issue/{eventId}")]
+        public async Task<IActionResult> IssuePart(int eventId)
+        {
+            var @event = await _context.Event.FindAsync(eventId);
+
+            if (@event == null)
+            {
+                return NotFound("Event not found.");
+            }
+
+            var part = await _context.Product.FirstOrDefaultAsync(p => p.name == @event.Part);
+
+            if (part == null)
+            {
+                return BadRequest("Part associated with the event not found.");
+            }
+
+            if (part.stockquantity <= 0)
+            {
+                return BadRequest("No stock available for this part.");
+            }
+
+            
+
+            // Ustawienie pola Part na 'default_value'
+            @event.Part = "default_value";
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(eventId))
+                {
+                    return NotFound("Event not found.");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+
+
+
+
+
 
         private bool EventExists(int id)
+{
+    return _context.Event.Any(e => e.Id == id);
+}
+
+
+        public class EventViewModel
         {
-            return _context.Event.Any(e => e.Id == id);
+            public string Title { get; set; }
+            public DateTime? StartDate { get; set; }
         }
+
+
+
     }
 }
