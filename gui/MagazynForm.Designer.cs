@@ -255,6 +255,7 @@
             Controls.Add(parts1);
             Name = "MagazynForm";
             Text = "MagazynForm";
+            Load += MagazynForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -85,7 +85,7 @@ namespace gui
 
 
 
- 
+
 
 
         private async void LoadItemShopAsync()
@@ -220,6 +220,7 @@ namespace gui
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
 
         private async void wydaj_Click(object sender, EventArgs e)
         {
@@ -363,16 +364,10 @@ namespace gui
             }
         }
 
+        private void MagazynForm_Load(object sender, EventArgs e)
+        {
 
-
-
-
-
-
-
-
-
-
+        }
     }
 
     public class ItemShop

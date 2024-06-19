@@ -141,7 +141,7 @@ namespace YourNamespace.Controllers
         public async Task<ActionResult<IEnumerable<EventViewModel>>> GetStartedEventTitles()
         {
             var startedEvents = await _context.Event
-                .Where(e => e.Status == "started")
+                .Where(e => e.Status == "started" || e.Status == "in progress")
                 .Select(e => new EventViewModel
                 {
                     Title = e.Title,
@@ -242,6 +242,58 @@ namespace YourNamespace.Controllers
                 }
             }
         }
+       // GET: api/Event/details
+[HttpGet("details")]
+public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEventsDetails()
+{
+    var events = await _context.Event
+        .Select(e => new EventDetailsViewModel
+        {
+            Title = e.Title,
+            Status = e.Status,
+            StartDate = e.StartDate,
+            EndDate = e.EndDate,
+            Serwisant = e.Serwisant
+        })
+        .ToListAsync();
+
+    return Ok(events);
+}
+        // PUT: api/Event/updateserwisant/{eventId}
+        [HttpPut("updateserwisant/{Id}")]
+        public async Task<IActionResult> UpdateEventSerwisant(int Id, [FromBody] string serwisantUsername)
+        {
+            var @event = await _context.Event.FindAsync(Id);
+
+            if (@event == null)
+            {
+                return NotFound("Event not found.");
+            }
+
+            @event.Serwisant = serwisantUsername;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(Id))
+                {
+                    return NotFound("Event not found.");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+
+
+
+
 
 
 
@@ -260,6 +312,7 @@ namespace YourNamespace.Controllers
             public string Title { get; set; }
             public DateTime? StartDate { get; set; }
         }
+
 
 
 

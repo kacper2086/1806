@@ -11,12 +11,10 @@
   <ItemGroup>
     <None Remove="AdminForm" />
     <None Remove="KlientForm" />
-    <None Remove="serwisform" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="AdminForm" />
-    <Compile Include="SerwisForm" />
     <Compile Include="KlientForm" />
   </ItemGroup>
 

@@ -13,6 +13,7 @@ namespace YourNamespace.Data
 
         public DbSet<Event> Event { get; set; }
         public DbSet<ItemShop> ItemShop { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
