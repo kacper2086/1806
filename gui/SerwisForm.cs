@@ -24,6 +24,8 @@ namespace gui
             wydaj.Click += wydaj_Click;
             editserv.Click += editserv_Click;
             refreshButton.Click += RefreshButton_Click;
+            deny.Click += deny_Click;
+            endserv.Click += endserv_Click;
         }
 
         private void SerwisForm_Load(object sender, EventArgs e)
@@ -217,8 +219,10 @@ namespace gui
                     if (response.IsSuccessStatusCode)
                     {
                         string json = await response.Content.ReadAsStringAsync();
+
                         List<EventDetailsViewModel> eventTitles = JsonConvert.DeserializeObject<List<EventDetailsViewModel>>(json);
 
+                        eventTitles = eventTitles.Where(e => e.Status != "rejected" && e.Status != "finished").ToList();
                         eve.DataSource = eventTitles; // Ustawienie źródła danych dla ComboBox
                         eve.DisplayMember = "DisplayText"; // Właściwość do wyświetlenia w ComboBox
                     }
@@ -238,53 +242,45 @@ namespace gui
             var selectedEvent = (EventDetailsViewModel)eve.SelectedItem;
             var selectedUser = (UserViewModel)ser.SelectedItem;
 
-
             if (selectedEvent != null && selectedUser != null)
             {
-
                 try
                 {
                     using (HttpClient client = new HttpClient())
                     {
-                        var updateObject = new
-                        {
-
-                            Title = selectedEvent.Title,
-                            serwisantUsername = selectedUser.Username,
-                            Status = "in progress"
-                        };
-
-                        // Serializacja do JSON i logowanie
-                        string updateObjectJson = JsonConvert.SerializeObject(updateObject);
-                        Debug.WriteLine("Update Object JSON: " + updateObjectJson);
-                        MessageBox.Show("Update Object JSON: " + updateObjectJson);
-
-                        var content = new StringContent(updateObjectJson, Encoding.UTF8, "application/json");
-
-                        // Logowanie przed wysłaniem żądania
-                        Debug.WriteLine($"Sending PUT request to {BaseUrl}/api/Event/updateserwisant/{selectedEvent.Id}");
-
-                        HttpResponseMessage response = await client.PutAsync($"{BaseUrl}/api/Event/updateserwisant/{selectedEvent.Id}", content);
-
-                        // Logowanie odpowiedzi serwera
-                        string responseBody = await response.Content.ReadAsStringAsync();
-                        Debug.WriteLine("Response Body: " + responseBody);
-                        MessageBox.Show($"Response Body: {responseBody}");
+                        // Pobierz wydarzenie po ID
+                        HttpResponseMessage response = await client.GetAsync($"{BaseUrl}/api/Event/{selectedEvent.Id}");
 
                         if (response.IsSuccessStatusCode)
                         {
-                            MessageBox.Show("Serwisant zaktualizowany pomyślnie.");
+                            string json = await response.Content.ReadAsStringAsync();
+                            Event existingEvent = JsonConvert.DeserializeObject<Event>(json);
+
+                            // Aktualizuj pole Serwisant
+                            existingEvent.Serwisant = selectedUser.Username;
+                            existingEvent.Status = "in progress";
+
+                            // Wyślij żądanie PUT, aby zaktualizować wydarzenie
+                            HttpResponseMessage updateResponse = await client.PutAsJsonAsync($"{BaseUrl}/api/Event/{existingEvent.Id}", existingEvent);
+
+                            if (updateResponse.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Serwisant zaktualizowany pomyślnie.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Nie udało się zaktualizować serwisanta: " + updateResponse.ReasonPhrase);
+                            }
                         }
                         else
                         {
-                            MessageBox.Show($"Nie udało się zaktualizować serwisanta: {response.ReasonPhrase}. Szczegóły: {responseBody}");
+                            MessageBox.Show("Nie udało się pobrać wydarzenia: " + response.ReasonPhrase);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Błąd: " + ex.Message);
-                    Debug.WriteLine("Exception: " + ex.ToString());
                 }
             }
             else
@@ -292,6 +288,112 @@ namespace gui
                 MessageBox.Show("Proszę wybrać zarówno wydarzenie, jak i serwisanta.");
             }
         }
+        private async void deny_Click(object sender, EventArgs e)
+        {
+            var selectedEvent = (EventDetailsViewModel)eve.SelectedItem;
+
+            if (selectedEvent != null)
+            {
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        // Pobierz wydarzenie po ID
+                        HttpResponseMessage response = await client.GetAsync($"{BaseUrl}/api/Event/{selectedEvent.Id}");
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string json = await response.Content.ReadAsStringAsync();
+                            Event existingEvent = JsonConvert.DeserializeObject<Event>(json);
+
+                            // Aktualizuj pole Status na "rejected"
+                            existingEvent.Status = "rejected";
+
+                            // Wyślij żądanie PUT, aby zaktualizować wydarzenie
+                            HttpResponseMessage updateResponse = await client.PutAsJsonAsync($"{BaseUrl}/api/Event/{existingEvent.Id}", existingEvent);
+
+                            if (updateResponse.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Status wydarzenia zmieniony na 'rejected' pomyślnie.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Nie udało się zmienić statusu wydarzenia: " + updateResponse.ReasonPhrase);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie udało się pobrać wydarzenia: " + response.ReasonPhrase);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Błąd: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Proszę wybrać wydarzenie.");
+            }
+        }
+        private async void endserv_Click(object sender, EventArgs e)
+        {
+            var selectedEvent = (EventDetailsViewModel)eve.SelectedItem;
+
+            if (selectedEvent != null)
+            {
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        // Pobierz wydarzenie po ID
+                        HttpResponseMessage response = await client.GetAsync($"{BaseUrl}/api/Event/{selectedEvent.Id}");
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string json = await response.Content.ReadAsStringAsync();
+                            Event existingEvent = JsonConvert.DeserializeObject<Event>(json);
+
+                            // Aktualizuj pole Status na "finished"
+                            existingEvent.Status = "finished";
+
+                            // Ustaw EndDate na bieżącą datę
+                            existingEvent.EndDate = DateTime.UtcNow;
+                         //   MessageBox.Show(existingEvent.UtcNow.ToString());
+
+                           // Wyślij żądanie PUT, aby zaktualizować wydarzenie
+                           HttpResponseMessage updateResponse = await client.PutAsJsonAsync($"{BaseUrl}/api/Event/{existingEvent.Id}", existingEvent);
+
+                            if (updateResponse.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Status wydarzenia zmieniony na 'finished' pomyślnie.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Nie udało się zmienić statusu wydarzenia: " + updateResponse.ReasonPhrase);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie udało się pobrać wydarzenia: " + response.ReasonPhrase);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Błąd: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Proszę wybrać wydarzenie.");
+            }
+        }
+    
+
+
+
 
 
 

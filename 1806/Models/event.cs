@@ -7,5 +7,6 @@
     public string Serwisant { get; set; }  // Nullable string
     public string Part { get; set; }  // Nullable string
     public string Status { get; set; }  // Dodane pole Status
+
 }
 

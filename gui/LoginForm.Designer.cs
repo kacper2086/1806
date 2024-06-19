@@ -45,7 +45,6 @@
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(200, 50);
             txtUsername.TabIndex = 0;
-
             // 
             // txtPassword
             // 
@@ -111,7 +110,8 @@
             Controls.Add(txtPassword);
             Controls.Add(txtUsername);
             Name = "LoginForm";
-            Text = "Form2";
+            Text = "Panel logowania";
+            Load += LoginForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

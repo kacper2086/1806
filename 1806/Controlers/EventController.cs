@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using YourNamespace.Models;  // Załóżmy, że namespace Twojego modelu to YourNamespace.Models
-using YourNamespace.Data;    // Załóżmy, że namespace Twojego DbContextu to YourNamespace.Data
+using YourNamespace.Data;
+using System.Diagnostics;// Załóżmy, że namespace Twojego DbContextu to YourNamespace.Data
 
 namespace YourNamespace.Controllers
 {
@@ -118,6 +119,11 @@ namespace YourNamespace.Controllers
             existingEvent.Part = @event.Part;
             existingEvent.Status = @event.Status;
 
+        
+        if (existingEvent.Status == "finished")
+    {
+        existingEvent.EndDate = @event.EndDate;
+    }
             try
             {
                 await _context.SaveChangesAsync();
@@ -133,6 +139,7 @@ namespace YourNamespace.Controllers
                     throw;
                 }
             }
+
 
             return NoContent();
         }
@@ -260,86 +267,53 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
 
     return Ok(events);
 }
-        // PUT: api/Event/updateserwisant/{eventId}
-        [HttpPut("updateserwisant/{Id}")]
-        public async Task<IActionResult> UpdateEventSerwisant(int Id, [FromBody] string serwisantUsername)
+        /// GET: api/Event/client/{clientId}
+        [HttpGet("client/{clientId}")]
+        public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetEventsByClientId(int clientId)
         {
-            var @event = await _context.Event.FindAsync(Id);
-
-            if (@event == null)
-            {
-                return NotFound("Event not found.");
-            }
-
-            @event.Serwisant = serwisantUsername;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-                return NoContent();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(Id))
+            var events = await _context.Event
+                .Select(e => new EventDetailsViewModel
                 {
-                    return NotFound("Event not found.");
-                }
-                else
-                {
-                    throw;
-                }
+                    Title = e.Title,
+                    Status = e.Status
+                })
+                .ToListAsync();
+
+            if (events == null || events.Count == 0)
+            {
+                return NotFound(); // Zwróć 404 Not Found, jeśli nie ma wydarzeń
             }
+
+            return Ok(events);
         }
-        // PUT: api/Event/{id}
-        [HttpPut("/api/Event/up/{id}")]
-        public async Task<IActionResult> UpdateEventS(int id, Event @event)
+        // POST: api/Event/CreateEvent
+        [HttpPost("CreateEvent")]
+        public async Task<ActionResult<Event>> CreateEvent(EventKl eventKl)
         {
-            if (@event == null)
-            {
-                return BadRequest("Event object is null");
-            }
-
-            if (id != @event.Id)
-            {
-                return BadRequest("Event ID mismatch");
-            }
-
-            var existingEvent = await _context.Event.FindAsync(id);
-            if (existingEvent == null)
-            {
-                return NotFound("Event not found");
-            }
-
-            existingEvent.Title = @event.Title;
-            existingEvent.Serwisant = @event.Serwisant;
-            existingEvent.Status = @event.Status;
-
             try
             {
+                var @event = new Event
+                {
+                    Title = eventKl.Title,
+                    StartDate = eventKl.StartDate,
+                    Part = "default_value",
+                    Status = "started",
+                    Serwisant = "default_value",
+                    // Możesz przypisać inne pola, jeśli są wymagane
+                };
+
+                _context.Event.Add(@event);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound("Event not found during save");
-                }
-                else
-                {
-                    return StatusCode(500, "Concurrency error occurred while updating the event");
-                }
+
+                return CreatedAtAction(nameof(GetEvent), new { id = @event.Id }, @event);
             }
             catch (Exception ex)
             {
-                // Log the exception
-                // e.g. _logger.LogError(ex, "An error occurred while updating the event");
-
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return BadRequest($"Błąd przy tworzeniu wydarzenia: {ex.Message}");
             }
-
-            return NoContent();
         }
 
+    
 
 
 
@@ -353,8 +327,7 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
 
 
 
-
-        private bool EventExists(int id)
+    private bool EventExists(int id)
 {
     return _context.Event.Any(e => e.Id == id);
 }
