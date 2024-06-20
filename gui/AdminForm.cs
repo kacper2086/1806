@@ -20,6 +20,8 @@ namespace gui
             InitializeComponent();
             btnAddUser.Click += btnAddUser_Click;
             LoadUsers();
+            btnRefresh.Click += btnRefresh_Click;
+            btnBackToLogin.Click += btnBackToLogin_Click;
         }
 
         private void AdminForm_Load(object sender, EventArgs e)
@@ -118,8 +120,28 @@ namespace gui
 
             // Możesz również dostosować inne właściwości kolumn, takie jak ReadOnly, Width, DefaultCellStyle itp.
         }
+        private void btnBackToLogin_Click(object sender, EventArgs e)
+        {
+            // Powrót do formularza logowania
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Hide(); // Ukrycie bieżącego formularza
+        }
 
+
+
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            InitializeComponent();
+            LoadUsers();
+        }
         private void utworz_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

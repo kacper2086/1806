@@ -261,7 +261,7 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
             Title = e.Title,
             Status = e.Status,
             StartDate = e.StartDate,
-            EndDate = e.EndDate,
+
             Serwisant = e.Serwisant
         })
         .ToListAsync();

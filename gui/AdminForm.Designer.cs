@@ -28,76 +28,120 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtLogin = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.cmbRole = new System.Windows.Forms.ComboBox();
-            this.btnAddUser = new System.Windows.Forms.Button();
-            this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
+            txtLogin = new TextBox();
+            txtPassword = new TextBox();
+            cmbRole = new ComboBox();
+            btnAddUser = new Button();
+            dataGridViewUsers = new DataGridView();
+            label1 = new Label();
+            btnRefresh = new Button();
+            btnBackToLogin = new Button();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).BeginInit();
+            SuspendLayout();
             // 
             // txtLogin
             // 
-            this.txtLogin.Location = new System.Drawing.Point(76, 139);
-            this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(100, 23);
-            this.txtLogin.TabIndex = 0;
+            txtLogin.Location = new Point(28, 142);
+            txtLogin.Name = "txtLogin";
+            txtLogin.Size = new Size(185, 23);
+            txtLogin.TabIndex = 0;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(76, 197);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(100, 23);
-            this.txtPassword.TabIndex = 1;
+            txtPassword.Location = new Point(28, 203);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(185, 23);
+            txtPassword.TabIndex = 1;
             // 
             // cmbRole
             // 
-            this.cmbRole.FormattingEnabled = true;
-            this.cmbRole.Items.AddRange(new object[] {
-            "admin",
-            "serwis",
-            "magazyn",
-            "klient"});
-            this.cmbRole.Location = new System.Drawing.Point(76, 249);
-            this.cmbRole.Name = "cmbRole";
-            this.cmbRole.Size = new System.Drawing.Size(121, 23);
-            this.cmbRole.TabIndex = 2;
+            cmbRole.FormattingEnabled = true;
+            cmbRole.Items.AddRange(new object[] { "admin", "serwis", "magazyn", "klient" });
+            cmbRole.Location = new Point(28, 259);
+            cmbRole.MaximumSize = new Size(185, 0);
+            cmbRole.MinimumSize = new Size(185, 0);
+            cmbRole.Name = "cmbRole";
+            cmbRole.Size = new Size(185, 23);
+            cmbRole.TabIndex = 2;
             // 
             // btnAddUser
             // 
-            this.btnAddUser.Location = new System.Drawing.Point(76, 308);
-            this.btnAddUser.Name = "btnAddUser";
-            this.btnAddUser.Size = new System.Drawing.Size(150, 23);
-            this.btnAddUser.TabIndex = 3;
-            this.btnAddUser.Text = "Utwórz użytkownika";
-            this.btnAddUser.UseVisualStyleBackColor = true;
-            this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
+            btnAddUser.BackColor = Color.Transparent;
+            btnAddUser.BackgroundImage = (Image)resources.GetObject("btnAddUser.BackgroundImage");
+            btnAddUser.FlatAppearance.BorderSize = 0;
+            btnAddUser.FlatStyle = FlatStyle.Flat;
+            btnAddUser.Location = new Point(28, 315);
+            btnAddUser.MaximumSize = new Size(185, 31);
+            btnAddUser.Name = "btnAddUser";
+            btnAddUser.Size = new Size(185, 31);
+            btnAddUser.TabIndex = 3;
+            btnAddUser.UseVisualStyleBackColor = false;
+            btnAddUser.Click += btnAddUser_Click;
             // 
             // dataGridViewUsers
             // 
-            this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewUsers.Location = new System.Drawing.Point(250, 60);
-            this.dataGridViewUsers.Name = "dataGridViewUsers";
-            this.dataGridViewUsers.Size = new System.Drawing.Size(500, 300);
-            this.dataGridViewUsers.TabIndex = 4;
+            dataGridViewUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewUsers.Location = new Point(232, 59);
+            dataGridViewUsers.Name = "dataGridViewUsers";
+            dataGridViewUsers.Size = new Size(500, 300);
+            dataGridViewUsers.TabIndex = 4;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label1.Location = new Point(270, 11);
+            label1.Name = "label1";
+            label1.Size = new Size(298, 45);
+            label1.TabIndex = 7;
+            label1.Text = "Panel Adimistratora";
+            label1.Click += label1_Click;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.BackColor = Color.Transparent;
+            btnRefresh.BackgroundImage = (Image)resources.GetObject("btnRefresh.BackgroundImage");
+            btnRefresh.BackgroundImageLayout = ImageLayout.None;
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Location = new Point(12, 407);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(117, 34);
+            btnRefresh.TabIndex = 42;
+            btnRefresh.UseVisualStyleBackColor = false;
+            // 
+            // btnBackToLogin
+            // 
+            btnBackToLogin.BackColor = Color.Transparent;
+            btnBackToLogin.BackgroundImage = (Image)resources.GetObject("btnBackToLogin.BackgroundImage");
+            btnBackToLogin.FlatAppearance.BorderSize = 0;
+            btnBackToLogin.FlatStyle = FlatStyle.Flat;
+            btnBackToLogin.Location = new Point(676, 407);
+            btnBackToLogin.Name = "btnBackToLogin";
+            btnBackToLogin.Size = new Size(112, 31);
+            btnBackToLogin.TabIndex = 41;
+            btnBackToLogin.UseVisualStyleBackColor = false;
             // 
             // AdminForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataGridViewUsers);
-            this.Controls.Add(this.btnAddUser);
-            this.Controls.Add(this.cmbRole);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtLogin);
-            this.Name = "AdminForm";
-            this.Text = "Panel administratora";
-            this.Load += new System.EventHandler(this.AdminForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(btnRefresh);
+            Controls.Add(btnBackToLogin);
+            Controls.Add(label1);
+            Controls.Add(dataGridViewUsers);
+            Controls.Add(btnAddUser);
+            Controls.Add(cmbRole);
+            Controls.Add(txtPassword);
+            Controls.Add(txtLogin);
+            Name = "AdminForm";
+            Text = "Panel administratora";
+            Load += AdminForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -107,5 +151,8 @@
         private System.Windows.Forms.ComboBox cmbRole;
         private System.Windows.Forms.Button btnAddUser;
         private System.Windows.Forms.DataGridView dataGridViewUsers;
+        private Label label1;
+        private Button btnRefresh;
+        private Button btnBackToLogin;
     }
 }

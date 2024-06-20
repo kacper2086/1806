@@ -21,7 +21,7 @@ namespace gui
             InitializeComponent();
             LoadEventDataAsync();
             btnAddEvent.Click += btnAddEvent_Click;
-            btnOpenInvoice.Click += btnOpenInvoice_Click;
+            btnRefresh.Click += btnRefresh_Click;
             btnBackToLogin.Click += btnBackToLogin_Click;
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             btnPobierzFakture.Click += btnPobierzFakture_Click;
@@ -163,8 +163,8 @@ namespace gui
         }
         private async void btnRefresh_Click(object sender, EventArgs e)
         {
-            // Pobierz aktualny ClientId użytkownika
-
+            InitializeComponent();
+            LoadEventDataAsync();
         }
         private async void btnOpenInvoice_Click(object sender, EventArgs e)
         {
@@ -260,7 +260,7 @@ namespace gui
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-                MessageBox.Show("Proszę wybrać wydarzenie z DataGridView."); // Możesz tut MessageBox.Show("Proszę wybrać wydarzenie z DataGridView.");aj podjąć działania na wybranym wierszu
+                MessageBox.Show("Wybrano wydarzenie."); // Możesz tut MessageBox.Show("Proszę wybrać wydarzenie z DataGridView.");aj podjąć działania na wybranym wierszu
             }
         }
 
@@ -277,6 +277,16 @@ namespace gui
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void date_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddEvent_Click_1(object sender, EventArgs e)
         {
 
         }

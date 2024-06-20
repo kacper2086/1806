@@ -42,7 +42,7 @@ namespace gui
             // 
             // txtUsername
             // 
-            txtUsername.BorderStyle = BorderStyle.None;
+            txtUsername.BorderStyle = BorderStyle.FixedSingle;
             txtUsername.Font = new Font("Segoe UI", 15.75F);
             txtUsername.Location = new Point(298, 125);
             txtUsername.MaximumSize = new Size(200, 50);
@@ -54,7 +54,7 @@ namespace gui
             // 
             // txtPassword
             // 
-            txtPassword.BorderStyle = BorderStyle.None;
+            txtPassword.BorderStyle = BorderStyle.FixedSingle;
             txtPassword.Cursor = Cursors.IBeam;
             txtPassword.Font = new Font("Segoe UI", 15.75F);
             txtPassword.Location = new Point(298, 223);
@@ -117,7 +117,7 @@ namespace gui
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.LightCyan;
+            BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(800, 450);
             Controls.Add(label3);
             Controls.Add(label2);

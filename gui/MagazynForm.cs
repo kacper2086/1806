@@ -21,6 +21,8 @@ namespace gui
             LoadUsersAsync();
             LoadSTartedEventsAsync();
             LoadItemShopAsync();
+            btnRefresh.Click += btnRefresh_Click;
+            btnBackToLogin.Click += btnBackToLogin_Click;
             zamow.Click += zamow_Click;
             wydaj.Click += wydaj_Click;
             przyjmij.Click += przyjmij_Click;
@@ -363,8 +365,38 @@ namespace gui
                 Console.WriteLine($"Exception: {ex}");
             }
         }
+        private void btnBackToLogin_Click(object sender, EventArgs e)
+        {
+            // Powrót do formularza logowania
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Hide(); // Ukrycie bieżącego formularza
+        }
+
+
+
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            InitializeComponent();
+            LoadProductsAsync();
+            LoadUsersAsync();
+            LoadSTartedEventsAsync();
+            LoadItemShopAsync();
+        }
+
 
         private void MagazynForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void wydaj_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void parts1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

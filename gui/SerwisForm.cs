@@ -23,7 +23,8 @@ namespace gui
             LoadServisUsersAsync();
             wydaj.Click += wydaj_Click;
             editserv.Click += editserv_Click;
-            refreshButton.Click += RefreshButton_Click;
+            btnRefresh.Click += btnRefresh_Click;
+            btnBackToLogin.Click += btnBackToLogin_Click;
             deny.Click += deny_Click;
             endserv.Click += endserv_Click;
         }
@@ -433,13 +434,20 @@ namespace gui
 
 
 
-
-
-
-
-
-        private void RefreshButton_Click(object sender, EventArgs e)
+        private void btnBackToLogin_Click(object sender, EventArgs e)
         {
+            // Powrót do formularza logowania
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Hide(); // Ukrycie bieżącego formularza
+        }
+
+
+
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            InitializeComponent();
             LoadProductsAsync();
             LoadUsersAsync();
             LoadEventsAsync();
@@ -458,6 +466,11 @@ namespace gui
         }
 
         private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
         {
 
         }

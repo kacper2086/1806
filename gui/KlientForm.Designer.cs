@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KlientForm));
             date = new DateTimePicker();
             dataGridView1 = new DataGridView();
             btnRefresh = new Button();
@@ -41,62 +42,80 @@
             // 
             // date
             // 
-            date.Location = new Point(30, 67);
+            date.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            date.Location = new Point(12, 112);
             date.Name = "date";
-            date.Size = new Size(200, 23);
+            date.Size = new Size(361, 35);
             date.TabIndex = 0;
+            date.ValueChanged += date_ValueChanged;
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(397, 33);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(391, 244);
+            dataGridView1.Size = new Size(519, 244);
             dataGridView1.TabIndex = 2;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // btnRefresh
             // 
-            btnRefresh.Location = new Point(397, 399);
+            btnRefresh.BackColor = Color.Transparent;
+            btnRefresh.BackgroundImage = (Image)resources.GetObject("btnRefresh.BackgroundImage");
+            btnRefresh.BackgroundImageLayout = ImageLayout.None;
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Location = new Point(22, 404);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(75, 23);
+            btnRefresh.Size = new Size(117, 34);
             btnRefresh.TabIndex = 3;
-            btnRefresh.Text = "button1";
-            btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.UseVisualStyleBackColor = false;
             // 
             // usluga
             // 
-            usluga.Location = new Point(30, 117);
+            usluga.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            usluga.Location = new Point(12, 165);
+            usluga.MaximumSize = new Size(361, 35);
+            usluga.MinimumSize = new Size(361, 35);
             usluga.Name = "usluga";
-            usluga.Size = new Size(100, 23);
+            usluga.Size = new Size(361, 35);
             usluga.TabIndex = 4;
             // 
             // btnAddEvent
             // 
-            btnAddEvent.Location = new Point(30, 160);
+            btnAddEvent.BackgroundImage = (Image)resources.GetObject("btnAddEvent.BackgroundImage");
+            btnAddEvent.FlatAppearance.BorderSize = 0;
+            btnAddEvent.FlatStyle = FlatStyle.Flat;
+            btnAddEvent.Location = new Point(119, 219);
             btnAddEvent.Name = "btnAddEvent";
-            btnAddEvent.Size = new Size(75, 23);
+            btnAddEvent.Size = new Size(143, 31);
             btnAddEvent.TabIndex = 5;
-            btnAddEvent.Text = "button1";
             btnAddEvent.UseVisualStyleBackColor = true;
+            btnAddEvent.Click += btnAddEvent_Click_1;
             // 
             // btnBackToLogin
             // 
-            btnBackToLogin.Location = new Point(133, 377);
+            btnBackToLogin.BackColor = Color.Transparent;
+            btnBackToLogin.BackgroundImage = (Image)resources.GetObject("btnBackToLogin.BackgroundImage");
+            btnBackToLogin.FlatAppearance.BorderSize = 0;
+            btnBackToLogin.FlatStyle = FlatStyle.Flat;
+            btnBackToLogin.Location = new Point(804, 404);
             btnBackToLogin.Name = "btnBackToLogin";
-            btnBackToLogin.Size = new Size(75, 23);
+            btnBackToLogin.Size = new Size(112, 31);
             btnBackToLogin.TabIndex = 6;
-            btnBackToLogin.Text = "Wyloguj";
-            btnBackToLogin.UseVisualStyleBackColor = true;
+            btnBackToLogin.UseVisualStyleBackColor = false;
             // 
             // btnPobierzFakture
             // 
-            btnPobierzFakture.Location = new Point(551, 293);
+            btnPobierzFakture.BackColor = Color.Transparent;
+            btnPobierzFakture.BackgroundImage = (Image)resources.GetObject("btnPobierzFakture.BackgroundImage");
+            btnPobierzFakture.FlatAppearance.BorderSize = 0;
+            btnPobierzFakture.FlatStyle = FlatStyle.Flat;
+            btnPobierzFakture.Location = new Point(579, 283);
             btnPobierzFakture.Name = "btnPobierzFakture";
-            btnPobierzFakture.Size = new Size(75, 23);
+            btnPobierzFakture.Size = new Size(208, 31);
             btnPobierzFakture.TabIndex = 8;
-            btnPobierzFakture.Text = "Pobierz fakture/paragon";
-            btnPobierzFakture.UseVisualStyleBackColor = true;
+            btnPobierzFakture.UseVisualStyleBackColor = false;
             // 
             // saveFileDialog1
             // 
@@ -106,7 +125,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(928, 450);
             Controls.Add(btnPobierzFakture);
             Controls.Add(btnBackToLogin);
             Controls.Add(btnAddEvent);
