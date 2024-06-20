@@ -5,13 +5,14 @@ namespace YourNamespace.Models
     public class Users
     {
         public int id { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Username is required")]
         public string username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         public string password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Role is required")]
         public string role { get; set; }
     }
 }

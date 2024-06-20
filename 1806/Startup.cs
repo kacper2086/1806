@@ -56,16 +56,25 @@ namespace YourNamespace
                     c.RoutePrefix = string.Empty; // Swagger UI at the app's root
                 });
             }
-
-
-
-            // Inne middleware'y, np. autentykacja, routowanie, obsługa błędów, statyczne pliki, CORS, itp.
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
+        
+            else
             {
-                endpoints.MapControllers();
-            });
-        }
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
+                // Inne middleware'y, np. autentykacja, routowanie, obsługa błędów, statyczne pliki, CORS, itp.
+                app.UseHttpsRedirection();
+                app.UseStaticFiles();
+
+                app.UseRouting();
+
+                app.UseAuthorization();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
+            }
     }
 }

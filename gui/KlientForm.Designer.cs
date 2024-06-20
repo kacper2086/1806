@@ -33,6 +33,7 @@
             btnRefresh = new Button();
             usluga = new TextBox();
             btnAddEvent = new Button();
+            btnBackToLogin = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -77,11 +78,21 @@
             btnAddEvent.Text = "button1";
             btnAddEvent.UseVisualStyleBackColor = true;
             // 
+            // btnBackToLogin
+            // 
+            btnBackToLogin.Location = new Point(133, 377);
+            btnBackToLogin.Name = "btnBackToLogin";
+            btnBackToLogin.Size = new Size(75, 23);
+            btnBackToLogin.TabIndex = 6;
+            btnBackToLogin.Text = "Wyloguj";
+            btnBackToLogin.UseVisualStyleBackColor = true;
+            // 
             // KlientForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnBackToLogin);
             Controls.Add(btnAddEvent);
             Controls.Add(usluga);
             Controls.Add(btnRefresh);
@@ -102,5 +113,6 @@
         private Button btnRefresh;
         private TextBox usluga;
         private Button btnAddEvent;
+        private Button btnBackToLogin;
     }
 }

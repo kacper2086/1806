@@ -20,7 +20,16 @@ namespace gui
             InitializeComponent();
             LoadEventDataAsync();
             btnAddEvent.Click += btnAddEvent_Click;
+            btnAddEvent.Click += btnAddEvent_Click;
+            btnBackToLogin.Click +=btnBackToLogin_Click;
+        }
 
+        private void btnBackToLogin_Click(object sender, EventArgs e)
+        {
+            // Powrót do formularza logowania
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Hide(); // Ukrycie bieżącego formularza
         }
         private async void KlientForm_Load(object sender, EventArgs e)
         {
