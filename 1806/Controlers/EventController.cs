@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using YourNamespace.Models;  // Załóżmy, że namespace Twojego modelu to YourNamespace.Models
 using YourNamespace.Data;
 using System.Diagnostics;// Załóżmy, że namespace Twojego DbContextu to YourNamespace.Data
+using System.Text;
 
 namespace YourNamespace.Controllers
 {
@@ -299,6 +300,7 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
                     Part = "default_value",
                     Status = "started",
                     Serwisant = "default_value",
+                    Cost = 0
                     // Możesz przypisać inne pola, jeśli są wymagane
                 };
 
@@ -312,8 +314,65 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
                 return BadRequest($"Błąd przy tworzeniu wydarzenia: {ex.Message}");
             }
         }
+        [HttpPut("update-cost/{eventId}")]
+        public async Task<IActionResult> UpdateEventCost(int eventId, [FromBody] decimal cost)
+        {
+            var existingEvent = await _context.Event.FindAsync(eventId);
 
-    
+            if (existingEvent == null)
+            {
+                return NotFound("Event not found.");
+            }
+
+            existingEvent.Cost = cost;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(eventId))
+                {
+                    return NotFound("Event not found.");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+        // GET: api/Event/{eventId}/invoice
+        [HttpGet("{eventId}/invoice")]
+        public async Task<IActionResult> GetEventInvoice(int eventId)
+        {
+            try
+            {
+                var existingEvent = await _context.Event.FindAsync(eventId);
+
+                if (existingEvent == null)
+                {
+                    return NotFound("Event not found.");
+                }
+
+                // Utwórz nazwę pliku faktury (tutaj zakładamy, że to tekstowa reprezentacja faktury)
+                string invoiceContent = $"Title: {existingEvent.Title}\n" +
+                                       $"StartDate: {existingEvent.StartDate}\n" +
+                                       $"EndDate: {existingEvent.EndDate}\n" +
+                                       $"Cost: {existingEvent.Cost}\n";
+
+                // Zapisz zawartość do pliku tymczasowego lub bezpośrednio zwróć jako response
+                // Możesz dostosować sposób przechowywania faktury do swoich potrzeb
+
+                // Zwróć fakturę jako response
+                return File(Encoding.UTF8.GetBytes(invoiceContent), "text/plain", "invoice.txt");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to retrieve invoice: {ex.Message}");
+            }
+        }
 
 
 
@@ -327,7 +386,8 @@ public async Task<ActionResult<IEnumerable<EventDetailsViewModel>>> GetAllEvents
 
 
 
-    private bool EventExists(int id)
+
+        private bool EventExists(int id)
 {
     return _context.Event.Any(e => e.Id == id);
 }

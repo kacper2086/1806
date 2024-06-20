@@ -7,4 +7,5 @@
     public string Status { get; set; }
     public string Serwisant { get; set; }
     public string Part { get; set; }
+    public decimal Cost { get; set; }
 }

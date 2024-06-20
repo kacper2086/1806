@@ -145,9 +145,15 @@ namespace gui
             {
                 try
                 {
+                    // Parse hours from textBoxHour
+                    if (!int.TryParse(hour.Text, out int hours))
+                    {
+                        MessageBox.Show("Wprowadź prawidłową liczbę godzin.");
+                        return;
+                    }
+
                     using (HttpClient client = new HttpClient())
                     {
-                        // Pobierz wydarzenie po tytule i dacie rozpoczęcia
                         HttpResponseMessage response = await client.GetAsync($"{BaseUrl}/api/Event/title/{selectedEvent.Title}");
 
                         if (response.IsSuccessStatusCode)
@@ -163,14 +169,39 @@ namespace gui
                                     return;
                                 }
 
-                                // Wykonaj aktualizację w bazie danych, przypisując część do wydarzenia
+                                // Calculate cost based on product price and additional charge for hours
+                                decimal additionalCost = hours * 120; // Assuming 120 is the rate per hour
+                                existingEvent.Cost = selectedPart.price + additionalCost; // Update the Cost property
+
+                                // Update the Part details
                                 existingEvent.Part = selectedPart.name;
 
+                                // Send PUT request to update event and cost
                                 HttpResponseMessage updateResponse = await client.PutAsJsonAsync($"{BaseUrl}/api/Event/{existingEvent.Id}", existingEvent);
 
                                 if (updateResponse.IsSuccessStatusCode)
                                 {
-                                    // Wywołaj API do zmniejszenia ilości w magazynie
+                                    // Proceed with updating cost directly in the UI
+                                    try
+                                    {
+                                        // Send PUT request to update cost directly in the controller
+                                        HttpResponseMessage updateCostResponse = await client.PutAsJsonAsync($"{BaseUrl}/api/Event/update-cost/{existingEvent.Id}", existingEvent.Cost);
+
+                                        if (updateCostResponse.IsSuccessStatusCode)
+                                        {
+                                            MessageBox.Show("Koszt wydarzenia zaktualizowany pomyślnie.");
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Nie udało się zaktualizować kosztu wydarzenia: " + updateCostResponse.ReasonPhrase);
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show("Błąd przy aktualizacji kosztu: " + ex.Message);
+                                    }
+
+                                    // Proceed with other operations (e.g., decreasing stock)
                                     HttpResponseMessage decreaseStockResponse = await client.PutAsync($"{BaseUrl}/api/products/decrease-stock/{selectedPart.name}", null);
 
                                     if (decreaseStockResponse.IsSuccessStatusCode)
@@ -208,6 +239,10 @@ namespace gui
                 MessageBox.Show("Proszę wybrać zarówno część, jak i wydarzenie.");
             }
         }
+
+
+
+
         private async void LoadEventsAsync()
         {
             try
@@ -360,10 +395,10 @@ namespace gui
 
                             // Ustaw EndDate na bieżącą datę
                             existingEvent.EndDate = DateTime.UtcNow;
-                         //   MessageBox.Show(existingEvent.UtcNow.ToString());
+                            //   MessageBox.Show(existingEvent.UtcNow.ToString());
 
-                           // Wyślij żądanie PUT, aby zaktualizować wydarzenie
-                           HttpResponseMessage updateResponse = await client.PutAsJsonAsync($"{BaseUrl}/api/Event/{existingEvent.Id}", existingEvent);
+                            // Wyślij żądanie PUT, aby zaktualizować wydarzenie
+                            HttpResponseMessage updateResponse = await client.PutAsJsonAsync($"{BaseUrl}/api/Event/{existingEvent.Id}", existingEvent);
 
                             if (updateResponse.IsSuccessStatusCode)
                             {
@@ -390,7 +425,7 @@ namespace gui
                 MessageBox.Show("Proszę wybrać wydarzenie.");
             }
         }
-    
+
 
 
 
@@ -422,7 +457,10 @@ namespace gui
 
         }
 
-    
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

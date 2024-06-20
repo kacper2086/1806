@@ -34,6 +34,8 @@
             usluga = new TextBox();
             btnAddEvent = new Button();
             btnBackToLogin = new Button();
+            btnPobierzFakture = new Button();
+            saveFileDialog1 = new SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -87,11 +89,25 @@
             btnBackToLogin.Text = "Wyloguj";
             btnBackToLogin.UseVisualStyleBackColor = true;
             // 
+            // btnPobierzFakture
+            // 
+            btnPobierzFakture.Location = new Point(551, 293);
+            btnPobierzFakture.Name = "btnPobierzFakture";
+            btnPobierzFakture.Size = new Size(75, 23);
+            btnPobierzFakture.TabIndex = 8;
+            btnPobierzFakture.Text = "Pobierz fakture/paragon";
+            btnPobierzFakture.UseVisualStyleBackColor = true;
+            // 
+            // saveFileDialog1
+            // 
+            saveFileDialog1.FileOk += saveFileDialog1_FileOk;
+            // 
             // KlientForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnPobierzFakture);
             Controls.Add(btnBackToLogin);
             Controls.Add(btnAddEvent);
             Controls.Add(usluga);
@@ -114,5 +130,7 @@
         private TextBox usluga;
         private Button btnAddEvent;
         private Button btnBackToLogin;
+        private Button btnPobierzFakture;
+        private SaveFileDialog saveFileDialog1;
     }
 }

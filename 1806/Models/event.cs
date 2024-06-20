@@ -1,4 +1,6 @@
-﻿public class Event
+﻿using System.Runtime.CompilerServices;
+
+public class Event
 {
     public int Id { get; set; }  // Zmieniłem nazwę właściwości na 'Id' aby była zgodna z konwencją PascalCase
     public string Title { get; set; }  // Zmieniłem nazwę właściwości na 'Title' aby była zgodna z konwencją PascalCase
@@ -7,6 +9,7 @@
     public string Serwisant { get; set; }  // Nullable string
     public string Part { get; set; }  // Nullable string
     public string Status { get; set; }  // Dodane pole Status
+    public Decimal Cost { get; set; }
 
 }
 

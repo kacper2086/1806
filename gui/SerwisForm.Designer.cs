@@ -42,13 +42,16 @@
             label4 = new Label();
             deny = new Button();
             endserv = new Button();
+            hour = new TextBox();
+            label2 = new Label();
+            label5 = new Label();
             SuspendLayout();
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label7.Location = new Point(17, 189);
+            label7.Location = new Point(164, 190);
             label7.Name = "label7";
             label7.Size = new Size(46, 20);
             label7.TabIndex = 22;
@@ -58,7 +61,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label6.Location = new Point(17, 131);
+            label6.Location = new Point(145, 132);
             label6.Name = "label6";
             label6.Size = new Size(65, 20);
             label6.TabIndex = 21;
@@ -66,7 +69,7 @@
             // 
             // wydaj
             // 
-            wydaj.Location = new Point(88, 239);
+            wydaj.Location = new Point(235, 304);
             wydaj.MaximumSize = new Size(180, 33);
             wydaj.MinimumSize = new Size(180, 33);
             wydaj.Name = "wydaj";
@@ -79,7 +82,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label3.Location = new Point(107, 66);
+            label3.Location = new Point(254, 67);
             label3.Name = "label3";
             label3.Size = new Size(132, 30);
             label3.TabIndex = 19;
@@ -89,7 +92,7 @@
             // 
             users1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
             users1.FormattingEnabled = true;
-            users1.Location = new Point(88, 182);
+            users1.Location = new Point(235, 183);
             users1.MaximumSize = new Size(180, 0);
             users1.MinimumSize = new Size(180, 0);
             users1.Name = "users1";
@@ -100,7 +103,7 @@
             // 
             parts1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
             parts1.FormattingEnabled = true;
-            parts1.Location = new Point(88, 124);
+            parts1.Location = new Point(235, 125);
             parts1.MaximumSize = new Size(180, 0);
             parts1.MinimumSize = new Size(180, 0);
             parts1.Name = "parts1";
@@ -111,7 +114,7 @@
             // 
             eve.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
             eve.FormattingEnabled = true;
-            eve.Location = new Point(321, 146);
+            eve.Location = new Point(599, 124);
             eve.MaximumSize = new Size(400, 0);
             eve.MinimumSize = new Size(400, 0);
             eve.Name = "eve";
@@ -121,7 +124,7 @@
             // ser
             // 
             ser.FormattingEnabled = true;
-            ser.Location = new Point(392, 204);
+            ser.Location = new Point(670, 182);
             ser.Name = "ser";
             ser.Size = new Size(121, 23);
             ser.TabIndex = 25;
@@ -130,7 +133,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label1.Location = new Point(300, 203);
+            label1.Location = new Point(578, 181);
             label1.Name = "label1";
             label1.Size = new Size(72, 20);
             label1.TabIndex = 28;
@@ -138,7 +141,7 @@
             // 
             // editserv
             // 
-            editserv.Location = new Point(321, 250);
+            editserv.Location = new Point(599, 228);
             editserv.MaximumSize = new Size(180, 33);
             editserv.MinimumSize = new Size(180, 33);
             editserv.Name = "editserv";
@@ -149,7 +152,7 @@
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(462, 489);
+            refreshButton.Location = new Point(740, 467);
             refreshButton.Name = "refreshButton";
             refreshButton.Size = new Size(75, 23);
             refreshButton.TabIndex = 30;
@@ -160,7 +163,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label4.Location = new Point(432, 88);
+            label4.Location = new Point(710, 66);
             label4.Name = "label4";
             label4.Size = new Size(166, 30);
             label4.TabIndex = 31;
@@ -168,7 +171,7 @@
             // 
             // deny
             // 
-            deny.Location = new Point(527, 250);
+            deny.Location = new Point(805, 228);
             deny.MaximumSize = new Size(180, 33);
             deny.MinimumSize = new Size(180, 33);
             deny.Name = "deny";
@@ -179,7 +182,7 @@
             // 
             // endserv
             // 
-            endserv.Location = new Point(432, 303);
+            endserv.Location = new Point(710, 281);
             endserv.MaximumSize = new Size(180, 33);
             endserv.MinimumSize = new Size(180, 33);
             endserv.Name = "endserv";
@@ -188,11 +191,41 @@
             endserv.Text = "Oznacz wykonanie usługi";
             endserv.UseVisualStyleBackColor = true;
             // 
+            // hour
+            // 
+            hour.Location = new Point(235, 241);
+            hour.Name = "hour";
+            hour.Size = new Size(180, 23);
+            hour.TabIndex = 34;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(60, 264);
+            label2.Name = "label2";
+            label2.Size = new Size(135, 15);
+            label2.TabIndex = 35;
+            label2.Text = "Godzina robocza = 120zł";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label5.Location = new Point(49, 244);
+            label5.Name = "label5";
+            label5.Size = new Size(161, 20);
+            label5.TabIndex = 36;
+            label5.Text = "Ilość godzin roboczych";
+            label5.Click += label5_Click;
+            // 
             // SerwisForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1102, 559);
+            Controls.Add(label5);
+            Controls.Add(label2);
+            Controls.Add(hour);
             Controls.Add(endserv);
             Controls.Add(deny);
             Controls.Add(label4);
@@ -232,5 +265,7 @@
         private Label label4;
         private Button deny;
         private Button endserv;
+        private TextBox hour;
+        private Label label5;
     }
 }
