@@ -383,6 +383,7 @@ namespace gui
             LoadUsersAsync();
             LoadSTartedEventsAsync();
             LoadItemShopAsync();
+            MessageBox.Show("Odświeżono dane");
         }
 
 

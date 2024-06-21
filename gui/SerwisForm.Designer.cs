@@ -277,6 +277,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Gainsboro;
             ClientSize = new Size(1102, 559);
             Controls.Add(label9);
             Controls.Add(btnBackToLogin);
@@ -299,7 +300,7 @@
             Controls.Add(users1);
             Controls.Add(parts1);
             Name = "SerwisForm";
-            Text = "SerwisForm";
+            Text = "Warsztat samochodowy - Panel serwisanta";
             Load += SerwisForm_Load_1;
             ResumeLayout(false);
             PerformLayout();

@@ -274,6 +274,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Gainsboro;
             ClientSize = new Size(1112, 482);
             Controls.Add(btnRefresh);
             Controls.Add(btnBackToLogin);
@@ -296,7 +297,7 @@
             Controls.Add(users1);
             Controls.Add(parts1);
             Name = "MagazynForm";
-            Text = "Panel magazyniera";
+            Text = "Warsztat samochodowy - Panel magazyniera";
             Load += MagazynForm_Load;
             ResumeLayout(false);
             PerformLayout();

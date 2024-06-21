@@ -57,7 +57,7 @@ namespace gui
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("User added successfully!");
-                        // Opcjonalnie wyczyść formularz lub podejmij inne działania
+
                     }
                     else
                     {
@@ -135,6 +135,7 @@ namespace gui
         {
             InitializeComponent();
             LoadUsers();
+            MessageBox.Show("Odświeżono dane");
         }
         private void utworz_Click(object sender, EventArgs e)
         {
@@ -142,6 +143,11 @@ namespace gui
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

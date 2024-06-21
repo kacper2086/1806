@@ -117,7 +117,7 @@ namespace gui
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ControlLightLight;
+            BackColor = Color.Gainsboro;
             ClientSize = new Size(800, 450);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -127,7 +127,7 @@ namespace gui
             Controls.Add(txtUsername);
             Cursor = Cursors.IBeam;
             Name = "LoginForm";
-            Text = "Panel logowania";
+            Text = "Warsztat samochodowy - Panel logowania";
             Load += LoginForm_Load;
             ResumeLayout(false);
             PerformLayout();

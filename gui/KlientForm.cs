@@ -25,12 +25,12 @@ namespace gui
             btnBackToLogin.Click += btnBackToLogin_Click;
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             btnPobierzFakture.Click += btnPobierzFakture_Click;
-            // Zmiana na CellClick
+
         }
 
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Upewnij się, że kliknięcie jest w rzeczywistym wierszu danych
+            if (e.RowIndex >= 0) 
             {
 
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
@@ -68,7 +68,7 @@ namespace gui
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync("/api/Event");
-                    response.EnsureSuccessStatusCode(); // Upewnij się, że odpowiedź jest udana
+                    response.EnsureSuccessStatusCode(); 
 
                     string json = await response.Content.ReadAsStringAsync();
                     List<EventViewModel> events = JsonConvert.DeserializeObject<List<EventViewModel>>(json);
@@ -165,6 +165,7 @@ namespace gui
         {
             InitializeComponent();
             LoadEventDataAsync();
+            MessageBox.Show("Odświeżono dane");
         }
         private async void btnOpenInvoice_Click(object sender, EventArgs e)
         {
@@ -286,9 +287,8 @@ namespace gui
 
         }
 
-        private void btnAddEvent_Click_1(object sender, EventArgs e)
-        {
 
-        }
+
+
     }
 }

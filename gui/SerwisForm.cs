@@ -452,6 +452,7 @@ namespace gui
             LoadUsersAsync();
             LoadEventsAsync();
             LoadServisUsersAsync();
+            MessageBox.Show("Odświeżono dane");
         }
 
 

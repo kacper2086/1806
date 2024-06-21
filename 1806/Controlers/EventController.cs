@@ -144,7 +144,7 @@ namespace YourNamespace.Controllers
 
             return NoContent();
         }
-        // GET: api/Event/ended
+        // GET: api/Event/started
         [HttpGet("started")]
         public async Task<ActionResult<IEnumerable<EventViewModel>>> GetStartedEventTitles()
         {

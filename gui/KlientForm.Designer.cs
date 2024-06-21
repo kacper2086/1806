@@ -37,13 +37,16 @@
             btnBackToLogin = new Button();
             btnPobierzFakture = new Button();
             saveFileDialog1 = new SaveFileDialog();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // date
             // 
             date.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            date.Location = new Point(12, 112);
+            date.Location = new Point(12, 116);
             date.Name = "date";
             date.Size = new Size(361, 35);
             date.TabIndex = 0;
@@ -52,7 +55,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(397, 33);
+            dataGridView1.Location = new Point(397, 97);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(519, 244);
             dataGridView1.TabIndex = 2;
@@ -74,7 +77,7 @@
             // usluga
             // 
             usluga.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            usluga.Location = new Point(12, 165);
+            usluga.Location = new Point(12, 169);
             usluga.MaximumSize = new Size(361, 35);
             usluga.MinimumSize = new Size(361, 35);
             usluga.Name = "usluga";
@@ -86,12 +89,12 @@
             btnAddEvent.BackgroundImage = (Image)resources.GetObject("btnAddEvent.BackgroundImage");
             btnAddEvent.FlatAppearance.BorderSize = 0;
             btnAddEvent.FlatStyle = FlatStyle.Flat;
-            btnAddEvent.Location = new Point(119, 219);
+            btnAddEvent.Location = new Point(119, 223);
             btnAddEvent.Name = "btnAddEvent";
             btnAddEvent.Size = new Size(143, 31);
             btnAddEvent.TabIndex = 5;
             btnAddEvent.UseVisualStyleBackColor = true;
-            btnAddEvent.Click += btnAddEvent_Click_1;
+            btnAddEvent.Click += btnAddEvent_Click;
             // 
             // btnBackToLogin
             // 
@@ -111,7 +114,7 @@
             btnPobierzFakture.BackgroundImage = (Image)resources.GetObject("btnPobierzFakture.BackgroundImage");
             btnPobierzFakture.FlatAppearance.BorderSize = 0;
             btnPobierzFakture.FlatStyle = FlatStyle.Flat;
-            btnPobierzFakture.Location = new Point(579, 283);
+            btnPobierzFakture.Location = new Point(579, 347);
             btnPobierzFakture.Name = "btnPobierzFakture";
             btnPobierzFakture.Size = new Size(208, 31);
             btnPobierzFakture.TabIndex = 8;
@@ -121,11 +124,45 @@
             // 
             saveFileDialog1.FileOk += saveFileDialog1_FileOk;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label1.Location = new Point(119, 61);
+            label1.Name = "label1";
+            label1.Size = new Size(136, 30);
+            label1.TabIndex = 9;
+            label1.Text = "Umów wizytę";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label2.Location = new Point(589, 61);
+            label2.Name = "label2";
+            label2.Size = new Size(226, 30);
+            label2.TabIndex = 10;
+            label2.Text = "Sprawdź status serwisu";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label3.Location = new Point(349, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(199, 45);
+            label3.TabIndex = 11;
+            label3.Text = "Panel klienta";
+            // 
             // KlientForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Gainsboro;
             ClientSize = new Size(928, 450);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(btnPobierzFakture);
             Controls.Add(btnBackToLogin);
             Controls.Add(btnAddEvent);
@@ -134,7 +171,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(date);
             Name = "KlientForm";
-            Text = "KlientForm";
+            Text = "Warsztat samochodowy - Panel klienta";
             Load += KlientForm_Load_1;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -151,5 +188,8 @@
         private Button btnBackToLogin;
         private Button btnPobierzFakture;
         private SaveFileDialog saveFileDialog1;
+        private Label label1;
+        private Label label2;
+        private Label label3;
     }
 }
